@@ -27,6 +27,13 @@ void Device::emit_def_handle(std::string handle, const node &n, std::string fiel
      << n.handle() << field << ")\n\n";
 }
 
+void Device::emit_def_handle(std::string handle, std::string suffix, const node &n, std::string field) {
+  emit_comment(n);
+  os << "#define " << handle << " (&__metal_dt_" << n.handle() << "_" << suffix << field << ")\n\n";
+  os << "#define " << "__METAL_DT_" << n.handle_cap() << "_" << suffix << "_HANDLE (&__metal_dt_"
+     << n.handle() << "_" << suffix << field << ")\n\n";
+}
+
 void Device::emit_def(std::string handle, std::string field) {
   os << "#define " << handle << " " << field << "\n\n";
 }
@@ -64,9 +71,20 @@ void Device::emit_struct_decl(std::string type, const node &n) {
   os << "struct __metal_driver_" << type << " __metal_dt_" << n.handle() << ";\n\n";
 }
 
+void Device::emit_struct_decl(std::string type, std::string suffix, const node &n) {
+  emit_comment(n);
+  os << "asm (\".weak __metal_dt_" << n.handle() << "_" << suffix << "\");\n";
+  os << "struct __metal_driver_" << type << "_" << suffix << " __metal_dt_" << n.handle() << "_" << suffix << ";\n\n";
+}
+
 void Device::emit_struct_begin(std::string type, const node &n) {
   emit_comment(n);
   os << "struct __metal_driver_" << type << " __metal_dt_" << n.handle() << " = {\n";
+}
+
+void Device::emit_struct_begin(std::string type, std::string suffix, const node &n) {
+  emit_comment(n);
+  os << "struct __metal_driver_" << type << "_" << suffix << " __metal_dt_" << n.handle() << "_" << suffix << " = {\n";
 }
 
 void Device::emit_struct_field(std::string field, std::string value) {
