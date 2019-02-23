@@ -592,7 +592,7 @@ static void write_linker_sections (fstream &os, bool scratchpad, bool ramrodata,
     os << "\t\t. = ALIGN(4);" << std::endl;
     os << "\t\tPROVIDE( metal_segment_data_target_start = . );" << std::endl;
     if (scratchpad) {
-      os << "\t} >ram AT>ram :ram_init" << std::endl;
+      os << "\t} >ram AT>ram :ram" << std::endl;
     } else {
       os << "\t} >ram AT>flash :ram_init" << std::endl;
     }
@@ -619,7 +619,7 @@ static void write_linker_sections (fstream &os, bool scratchpad, bool ramrodata,
     os << "\t\t*(.srodata.cst2)" << std::endl;
     os << "\t\t*(.srodata .srodata.*)" << std::endl;
     if (scratchpad) {
-      os << "\t} >ram AT>ram :ram_init" << std::endl;
+      os << "\t} >ram AT>ram :ram" << std::endl;
     } else {
       os << "\t} >ram AT>flash :ram_init" << std::endl;
     }
