@@ -23,6 +23,7 @@ static void show_usage(string name)
 	    << "Options:\n"
 	    << "\t-h,--help\t\t\tShow this help message\n"
 	    << "\t-d,--dtb <eg. xxx.dtb>\t\tSpecify fullpath to the DTB file\n"
+            << "\t-f,--format <eg. header, svd>\tChoose C header or SVD format\n"
 	    << "\t-o,--output <eg. ${machine}.h>\tGenerate machine header file\n"
 	    << endl;
 }
@@ -58,6 +59,7 @@ int main (int argc, char* argv[])
 {
   string dtb_file;
   string config_file;
+  string format = "";
 
   if ((argc < 2) && (argc > 5)) {
       show_usage(argv[0]);
@@ -70,6 +72,14 @@ int main (int argc, char* argv[])
                   dtb_file = argv[++i];
               } else {
                   std::cerr << "--dtb option requires file path." << std::endl;
+                  show_usage(argv[0]);
+                  return 1;
+              }
+          } else if ((arg == "-f") || (arg == "--format")) {
+              if (i + 1 < argc) {
+                  format = argv[++i];
+              } else if((format.compare("header") || format.compare("svd"))){
+                  std::cerr << "--format option requires choice of 'header' or 'svd'." << std::endl;
                   show_usage(argv[0]);
                   return 1;
               }
