@@ -57,8 +57,17 @@ static void write_header_file(const fdt &dtb, fstream &os, std::string cfg_file)
 
 static void write_svd_file(const fdt &dtb, fstream &os, std::string cfg_file) {
 
+  os << "<?xml version=\"1.0\" encoding=\"utf-8\"?>" << std::endl;
+  os << "<device schemaVersion=\"1.1\""
+     << "xmlns:xs=\"http://www.w3.org/2001/XMLSchema-instance\""
+     << "xs:noNamespaceSchemaLocation=\"CMSIS-SVD.xsd\" >" << std::endl;
+
+  os << "<vendor>SiFive Inc.</vendor>" << std::endl;
+  os << "<name>Foo</name>" << std::endl;
+
   /* Add SVD output here */
 
+  os << "</device>";
 }
 
 int main (int argc, char* argv[])
