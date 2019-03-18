@@ -6,7 +6,7 @@ bin_PROGRAMS =  freedom-ldscript-generator \
 		freedom-openocdcfg-generator \
 		freedom-makeattributes-generator \
 		freedom-metal_header-generator \
-		freedom-bare_header-generator \
+		freedom-svd-generator \
 		freedom-zephyrdtsfixup-generator \
 		freedom-metal_specs-generator
 
@@ -49,9 +49,9 @@ freedom_metal_header_generator_SOURCES = \
 	metal_header/stdout_path.h \
 	metal_header/template_device.h
 
-freedom_bare_header_generator_SOURCES = \
+freedom_svd_generator_SOURCES = \
 	fdt.c++ \
-	bare_header/freedom-bare_header-generator.c++
+	svd/freedom-svd-generator.c++
 
 freedom_zephyrdtsfixup_generator_SOURCES = \
 	freedom-zephyrdtsfixup-generator.c++ \
