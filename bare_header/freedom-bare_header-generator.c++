@@ -38,7 +38,7 @@ void search_replace_all(std::string& str, const std::string& from, const std::st
     }
 }
 
-static void write_config_file(const fdt &dtb, fstream &os, std::string cfg_file)
+static void write_header_file(const fdt &dtb, fstream &os, std::string cfg_file)
 {
   std::transform(cfg_file.begin(), cfg_file.end(), cfg_file.begin(),
                    [](unsigned char c) { return (c == '-') ? '_' : toupper(c); });
@@ -53,6 +53,12 @@ static void write_config_file(const fdt &dtb, fstream &os, std::string cfg_file)
   /* Add header output here */
 
   os << "#endif /* " << cfg_file << "*/" << std::endl;
+}
+
+static void write_svd_file(const fdt &dtb, fstream &os, std::string cfg_file) {
+
+  /* Add SVD output here */
+
 }
 
 int main (int argc, char* argv[])
@@ -121,7 +127,11 @@ int main (int argc, char* argv[])
       return 1;
     }
 
-    write_config_file(f, cfg, config_file);
+    if(format.compare("header") == 0) {
+      write_header_file(f, cfg, config_file);
+    } else if(format.compare("svd") == 0) {
+      write_svd_file(f, cfg, config_file);
+    }
   }
 
   return 0;
