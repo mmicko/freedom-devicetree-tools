@@ -78,7 +78,7 @@ int main (int argc, char* argv[])
           } else if ((arg == "-f") || (arg == "--format")) {
               if (i + 1 < argc) {
                   format = argv[++i];
-              } else if((format.compare("header") || format.compare("svd"))){
+              } else {
                   std::cerr << "--format option requires choice of 'header' or 'svd'." << std::endl;
                   show_usage(argv[0]);
                   return 1;
@@ -96,6 +96,12 @@ int main (int argc, char* argv[])
               return 1;
           }
       }
+  }
+
+  if((format.compare("header") != 0) && (format.compare("svd") != 0)){
+      std::cerr << "--format option requires choice of 'header' or 'svd'." << std::endl;
+      show_usage(argv[0]);
+      return 1;
   }
 
   if (dtb_file.empty()) {
